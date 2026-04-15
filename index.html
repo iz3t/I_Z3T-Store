@@ -1,1 +1,165 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 Z3T Shop</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), 
+                        url('https://images.alphacoders.com/132/1327170.png'); 
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: #e2e8f0; margin: 0; padding: 15px; 
+        }
+        .container { max-width: 500px; margin: auto; }
+        .card { 
+            background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(12px);
+            border-radius: 18px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.1); 
+            margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        h2, h3 { color: #38bdf8; text-align: center; margin-top: 0; }
+        
+        /* Grid Design */
+        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+        .price-item { 
+            background: #1e293b; border-radius: 12px; text-align: center; 
+            border: 1px solid rgba(56, 189, 248, 0.2); overflow: hidden; position: relative;
+            transition: 0.3s ease; height: 130px;
+        }
+        .price-item:hover { transform: translateY(-5px); border-color: #38bdf8; box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3); }
+
+        /* Game & Service Images */
+        .service-img { width: 100%; height: 75px; object-fit: cover; filter: brightness(0.7); transition: 0.3s; }
+        .price-item:hover .service-img { filter: brightness(1); }
+
+        .price-content { padding: 8px; background: #1e293b; position: absolute; bottom: 0; width: 100%; }
+        .price-name { font-size: 11px; color: #94a3b8; display: block; }
+        .price-val { font-size: 14px; font-weight: bold; color: #38bdf8; display: block; }
+
+        /* Form & Buttons */
+        .payment-info { background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 10px; border: 1px dashed #38bdf8; }
+        .payment-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; }
+        input, select { width: 100%; padding: 12px; margin-top: 8px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
+        .buy-btn { width: 100%; background: linear-gradient(45deg, #0ea5e9, #2563eb); color: white; border: none; padding: 15px; border-radius: 10px; margin-top: 20px; font-weight: bold; cursor: pointer; }
+        .channel-btn { display: block; text-align: center; background: #22c55e; color: white; text-decoration: none; padding: 12px; border-radius: 8px; margin-top: 10px; font-weight: bold; }
+        
+        .swal2-popup { background: #1e293b !important; color: white !important; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card" style="text-align: center;">
+        <h2 style="margin-bottom: 5px;">1 Z3T Shop</h2>
+        <p style="font-size: 12px; color: #94a3b8;">Fast & Reliable Digital Services</p>
+        <a href="https://t.me/izet_dpmyanmar_seller" class="channel-btn"><i class="fab fa-telegram"></i> Telegram Channel သို့ဝင်ရန်</a>
+    </div>
+
+    <div class="card">
+        <h3><i class="fas fa-gamepad"></i> Game Top-up</h3>
+        <div class="price-grid">
+            <div class="price-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_S9j8mYm_v_RByD_99mD9085r30Y1m9t2uA&s" class="service-img">
+                <div class="price-content"><span class="price-name">MLBB 86 Dias</span><span class="price-val">2,400 K</span></div>
+            </div>
+            <div class="price-item">
+                <img src="https://play-lh.googleusercontent.com/97SjZ_769_hInR0H2hLshA_5S4Y49-Nf768V39S401hYF-P0_261_201_P-1" class="service-img">
+                <div class="price-content"><span class="price-name">FF 110 Dias</span><span class="price-val">2,200 K</span></div>
+            </div>
+            <div class="price-item">
+                <img src="https://i.pinimg.com/736x/8d/6d/4e/8d6d4e565985055b8e918c5750d45862.jpg" class="service-img">
+                <div class="price-content"><span class="price-name">HOK 80 Tokens</span><span class="price-val">2,300 K</span></div>
+            </div>
+            <div class="price-item">
+                <img src="https://m.media-amazon.com/images/I/41-lS0p6yLL.jpg" class="service-img">
+                <div class="price-content"><span class="price-name">PUBG 60 UC</span><span class="price-val">2,500 K</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3><i class="fas fa-share-alt"></i> Social Media Services</h3>
+        <div class="price-grid">
+            <div class="price-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="service-img" style="object-fit: contain; padding: 10px;">
+                <div class="price-content"><span class="price-name">FB Follower</span><span class="price-val">2,500 K</span></div>
+            </div>
+            <div class="price-item">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" class="service-img" style="object-fit: contain; padding: 10px;">
+                <div class="price-content"><span class="price-name">TikTok Service</span><span class="price-val">2,000 K</span></div>
+            </div>
+            <div class="price-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="service-img" style="object-fit: contain; padding: 10px;">
+                <div class="price-content"><span class="price-name">TG Member</span><span class="price-val">3,500 K</span></div>
+            </div>
+            <div class="price-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" class="service-img" style="object-fit: contain; padding: 10px;">
+                <div class="price-content"><span class="price-name">YouTube View</span><span class="price-val">4,000 K</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3><i class="fas fa-wallet"></i> Payment</h3>
+        <div class="payment-info">
+            <div class="payment-row"><span>KPay:</span><span style="color:#38bdf8; font-weight:bold;">09971941600</span></div>
+            <div class="payment-row"><span>Wave:</span><span style="color:#38bdf8; font-weight:bold;">09799747004</span></div>
+            <div class="payment-row"><span>Name:</span><span>Khant Min Hein</span></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3><i class="fas fa-edit"></i> Order Form</h3>
+        <select id="category">
+            <optgroup label="Game">
+                <option value="MLBB">Mobile Legends</option>
+                <option value="FF">Free Fire</option>
+                <option value="HOK">Honor of Kings</option>
+                <option value="PUBG">PUBG Mobile</option>
+            </optgroup>
+            <optgroup label="Social Media">
+                <option value="Facebook">Facebook Service</option>
+                <option value="TikTok">TikTok Service</option>
+                <option value="Telegram">Telegram Service</option>
+                <option value="YouTube">YouTube Service</option>
+            </optgroup>
+        </select>
+        <input type="text" id="userData" placeholder="ID (Server) / Link">
+        <input type="text" id="amount" placeholder="ပမာဏ (ဥပမာ - 86 Dias)">
+        <button class="buy-btn" onclick="sendToTelegram()">Order တင်မည်</button>
+    </div>
+</div>
+
+<script>
+function sendToTelegram() {
+    const token = "8721885309:AAG0aGjsB_2voyjyDdWjU_KDiRNNGfyVlF0"; 
+    const chat_id = "8727691110";
+    const category = document.getElementById('category').value;
+    const userData = document.getElementById('userData').value;
+    const amount = document.getElementById('amount').value;
+
+    if(!userData || !amount) {
+        Swal.fire({ icon: 'warning', title: 'လိုအပ်သည်', text: 'အချက်အလက်များ ဖြည့်ပါဦး', confirmButtonColor: '#38bdf8' });
+        return;
+    }
+
+    const message = `🚀 *New Order!*%0A------------------------%0A📦 *Item:* ${category}%0A🆔 *ID/Link:* ${userData}%0A📊 *Amount:* ${amount}%0A💳 *Status:* Paid%0A------------------------%0A⚡ _1 Z3T Shop_`;
+
+    const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${message}&parse_mode=Markdown`;
+
+    fetch(url).then(response => {
+        if (response.ok) {
+            Swal.fire({ icon: 'success', title: 'အောင်မြင်သည်', text: 'အော်ဒါ ပို့ပြီးပါပြီ။', confirmButtonColor: '#22c55e' });
+        } else {
+            Swal.fire({ icon: 'error', title: 'အမှားအယွင်း', text: 'Bot ချိတ်ဆက်မှု မရပါ။' });
+        }
+    }).catch(err => Swal.fire({ icon: 'error', title: 'Error', text: 'Internet မရှိပါ' }));
+}
+</script>
+
+</body>
+</html>
 
