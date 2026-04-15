@@ -1,1 +1,246 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 Z3T Shop</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                        url('https://images.alphacoders.com/132/1327170.png'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #e2e8f0; 
+            margin: 0; 
+            padding: 15px; 
+        }
+        .container { max-width: 500px; margin: auto; }
+        .card { 
+            background: rgba(30, 41, 59, 0.7); 
+            backdrop-filter: blur(10px);
+            border-radius: 15px; 
+            padding: 20px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            margin-bottom: 20px; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5); 
+        }
+        h2, h3 { color: #38bdf8; text-align: center; margin-top: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+
+        /* Pricing Card Grid */
+        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .price-item { 
+            background: rgba(15, 23, 42, 0.6); 
+            padding: 15px; 
+            border-radius: 12px; 
+            text-align: center; 
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            transition: 0.3s;
+        }
+        .price-item:hover { border-color: #38bdf8; transform: translateY(-3px); }
+        .price-item i { font-size: 24px; color: #38bdf8; margin-bottom: 8px; }
+        .price-name { font-size: 13px; color: #94a3b8; display: block; }
+        .price-val { font-size: 16px; font-weight: bold; color: #fff; display: block; margin-top: 4px; }
+
+        .payment-info { background: rgba(15, 23, 42, 0.8); padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px dashed #38bdf8; }
+        .payment-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        .copy-text { color: #38bdf8; font-weight: bold; }
+        
+        /* Stylized Inputs */
+        label { display: block; margin-top: 15px; font-size: 14px; color: #cbd5e1; }
+        input { 
+            width: 100%; padding: 12px; margin-top: 5px; 
+            border-radius: 8px; border: 1px solid #334155; 
+            background: rgba(15, 23, 42, 0.9); color: white; 
+            box-sizing: border-box; outline: none; 
+        }
+
+        /* 🆕 နာမည်နဲ့လိုက်မယ့် Selector Popup Button */
+        .service-trigger {
+            width: 100%; padding: 12px; margin-top: 5px; 
+            border-radius: 8px; border: 1px solid #334155; 
+            background: rgba(15, 23, 42, 0.9); color: white; 
+            cursor: pointer; text-align: left; position: relative;
+        }
+        .service-trigger::after {
+            content: "\f107"; font-family: "Font Awesome 5 Free"; font-weight: 900;
+            position: absolute; right: 15px; top: 12px; color: #38bdf8;
+        }
+
+        /* Stylized Buy Button */
+        .buy-btn { width: 100%; background: linear-gradient(45deg, #0ea5e9, #2563eb); color: white; border: none; padding: 15px; border-radius: 10px; margin-top: 20px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; }
+        .buy-btn:active { transform: scale(0.95); }
+        .channel-btn { display: block; text-align: center; background: #22c55e; color: white; text-decoration: none; padding: 12px; border-radius: 8px; margin-top: 10px; font-size: 14px; font-weight: bold; }
+        
+        /* 🆕 Anime/Game Stylized Popup */
+        .swal2-popup.anime-popup {
+            background: rgba(30, 41, 59, 0.95) !important;
+            backdrop-filter: blur(10px);
+            color: #fff !important;
+            border: 2px solid #38bdf8;
+            border-radius: 15px;
+            padding: 10px !important;
+        }
+        .anime-popup h2 { font-size: 18px; margin-bottom: 15px !important; color: #fff !important; font-weight: bold; text-align: center; }
+        .anime-option {
+            background: rgba(15, 23, 42, 0.8);
+            margin: 5px 0; border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: start; text-align: left;
+            position: relative; overflow: hidden;
+            width: 100% !important; border: none; color: #cbd5e1 !important;
+        }
+        /* 🆕 နာမည်နဲ့လိုက်မယ့် 'Z' Hover Effect */
+        .anime-option::before {
+            content: "Z"; position: absolute; left: -20px;
+            font-size: 40px; font-weight: 900; color: rgba(56, 189, 248, 0.1);
+            transition: 0.3s;
+        }
+        .anime-option:hover { background: rgba(56, 189, 248, 0.15); border-color: #38bdf8; color: #fff; }
+        .anime-option:hover::before { left: 10px; color: rgba(56, 189, 248, 0.2); }
+        .anime-option i { width: 40px; text-align: center; color: #38bdf8; font-size: 16px; position: relative; z-index: 1; }
+        .anime-option span { font-size: 14px; position: relative; z-index: 1; margin-left: -5px;}
+
+        /* Hide Default Selector */
+        #category-hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2>1 Z3T Shop</h2>
+        <p style="text-align: center; font-size: 13px; color: #cbd5e1;">Quality Game & Social Media Services</p>
+        <a href="https://t.me/izet_dpmyanmar_seller" class="channel-btn"><i class="fab fa-telegram"></i> Join Our Telegram Channel</a>
+    </div>
+
+    <div class="card">
+        <h3>💰 Popular Services</h3>
+        <div class="price-grid">
+            <div class="price-item"><i class="fas fa-gem"></i><span class="price-name">MLBB 86 Dias</span><span class="price-val">2,400 K</span></div>
+            <div class="price-item"><i class="fas fa-bolt"></i><span class="price-name">FF 100+10</span><span class="price-val">2,200 K</span></div>
+        </div>
+        
+        <h3 style="margin-top: 20px;">💳 Payment (ငွေလွှဲရန်)</h3>
+        <div class="payment-info">
+            <div class="payment-row"><span>KPay:</span><span class="copy-text">09971941600</span></div>
+            <div class="payment-row"><span>Wave:</span><span class="copy-text">09799747004</span></div>
+            <div class="payment-row"><span>Name:</span><span style="color: #fff;">Khant Min Hein</span></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>📝 Order Form</h3>
+        
+        <label>ဝန်ဆောင်မှု ရွေးချယ်ပါ</label>
+        <button id="service-button" class="service-trigger" onclick="openServicePopup()">
+            <i class="fas fa-gamepad" style="color:#38bdf8; margin-right:8px;"></i>
+            <span id="selected-service-name">Mobile Legends (MLBB)</span>
+        </button>
+        
+        <select id="category-hidden">
+            <option value="MLBB Diamond" selected>Mobile Legends (MLBB)</option>
+            <option value="Free Fire Diamond">Free Fire (FF)</option>
+            <option value="Honor of Kings">Honor of Kings (HOK)</option>
+            <option value="Facebook Service">Facebook Service</option>
+            <option value="TikTok Service">TikTok Service</option>
+            <option value="YouTube Service">YouTube Service</option>
+        </select>
+
+        <label>Game ID / Link</label>
+        <input type="text" id="userData" placeholder="ID (Server ID) / Link">
+        <label>ပမာဏ (Amount)</label>
+        <input type="text" id="amount" placeholder="ဥပမာ - 172 Dias / 1000 Follower">
+        <button class="buy-btn" onclick="sendToTelegram()">အော်ဒါတင်မည်</button>
+    </div>
+</div>
+
+<script>
+// 🆕 ကြီးလွန်းတဲ့ Menu အစား Anime Stylized Popup လုပ်တဲ့ Function
+function openServicePopup() {
+    Swal.fire({
+        title: 'Choose Service',
+        customClass: {
+            popup: 'anime-popup',
+            confirmButton: 'hidden', // Confirm Button မလိုဘူး
+        },
+        showConfirmButton: false,
+        width: '400px',
+        html: `
+            <div style="text-align: left; padding: 0 10px;">
+                <p style="font-size: 13px; color: #94a3b8; margin: -5px 0 10px 0; font-weight: bold;">Game Top-up</p>
+                <button class="anime-option" onclick="selectService('MLBB Diamond', 'Mobile Legends (MLBB)', 'fa-gamepad')"><i class="fas fa-gem"></i> <span>Mobile Legends (MLBB)</span></button>
+                <button class="anime-option" onclick="selectService('Free Fire Diamond', 'Free Fire (FF)', 'fa-fire')"><i class="fas fa-bolt"></i> <span>Free Fire (FF)</span></button>
+                <button class="anime-option" onclick="selectService('Honor of Kings', 'Honor of Kings (HOK)', 'fa-crown')"><i class="fas fa-star"></i> <span>Honor of Kings (HOK)</span></button>
+
+                <p style="font-size: 13px; color: #94a3b8; margin: 15px 0 10px 0; font-weight: bold;">Social Media</p>
+                <button class="anime-option" onclick="selectService('Facebook Service', 'Facebook Service', 'fa-thumbs-up')"><i class="fab fa-facebook-f"></i> <span>Facebook Service</span></button>
+                <button class="anime-option" onclick="selectService('TikTok Service', 'TikTok Service', 'fa-share-alt')"><i class="fab fa-tiktok"></i> <span>TikTok Service</span></button>
+                <button class="anime-option" onclick="selectService('YouTube Service', 'YouTube Service', 'fa-video')"><i class="fab fa-youtube"></i> <span>YouTube Service</span></button>
+            </div>
+        `
+    });
+}
+
+// 🆕 ရွေးလိုက်ရင် Form မှာ Update လုပ်ပေးတဲ့ Function
+function selectService(value, name, icon) {
+    // တကယ့် Hidden Selector မှာ တန်ဖိုးထည့်မယ်
+    document.getElementById('category-hidden').value = value;
+    
+    // Website ပေါ်က Button မှာ Icon နဲ့ စာသားကို ပြောင်းမယ်
+    document.getElementById('service-button').innerHTML = `<i class="fas ${icon}" style="color:#38bdf8; margin-right:8px;"></i><span>${name}</span>`;
+    
+    // Popup ကို ပိတ်မယ်
+    Swal.close();
+}
+
+function sendToTelegram() {
+    const token = "8721885309:AAG0aGjsB_2voyjyDdWjU_KDiRNNGfyVlF0"; 
+    const chat_id = "8727691110";
+    // Hidden selector ကနေ တန်ဖိုးယူမယ်
+    const category = document.getElementById('category-hidden').value;
+    const userData = document.getElementById('userData').value;
+    const amount = document.getElementById('amount').value;
+
+    if(!userData || !amount) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Attention',
+            text: 'အချက်အလက်များကို ပြည့်စုံစွာ ဖြည့်ပေးပါဗျ။',
+            customClass: { popup: 'anime-popup' },
+            confirmButtonColor: '#38bdf8'
+        });
+        return;
+    }
+
+    const message = `🚀 *New Purchase!*%0A------------------------%0A📦 *Service:* ${category}%0A🆔 *ID/Link:* ${userData}%0A📊 *Amount:* ${amount}%0A💳 *Status:* Paid%0A------------------------%0A⚡ _1 Z3T Shop_`;
+
+    const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${message}&parse_mode=Markdown`;
+
+    fetch(url).then(response => {
+        if (response.ok) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'အော်ဒါ ပို့ပြီးပါပြီ။ ခေတ္တစောင့်ဆိုင်းပေးပါ။',
+                customClass: { popup: 'anime-popup' },
+                confirmButtonColor: '#22c55e'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: 'Error: Bot ချိတ်ဆက်မှု မရပါ။',
+                customClass: { popup: 'anime-popup' }
+            });
+        }
+    });
+}
+</script>
+
+</body>
+  </html>
 
