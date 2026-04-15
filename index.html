@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 Z3T Shop | Official</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root { --primary: #38bdf8; --bg: #0f172a; --card: #1e293b; }
+        body { font-family: sans-serif; background: var(--bg); color: white; margin: 0; padding: 20px; }
+        .header { text-align: center; background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid var(--primary); margin-bottom: 25px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card { background: var(--card); border-radius: 15px; overflow: hidden; border: 1px solid #334155; cursor: pointer; text-align: center; }
+        .img-box { width: 100%; aspect-ratio: 1/1; background: white; padding: 10px; box-sizing: border-box; }
+        .img-box img { width: 100%; height: 100%; object-fit: contain; }
+        .card-name { padding: 10px; font-weight: bold; font-size: 14px; }
+        
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 1000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+        .item { background: var(--card); padding: 18px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; border: 1px solid #334155; cursor: pointer; }
+        .item:active { background: var(--primary); }
+        .pay-info { background: #334155; padding: 15px; border-radius: 12px; margin: 15px 0; border: 1px dashed var(--primary); }
+        input { width: 100%; padding: 16px; margin: 10px 0; border-radius: 10px; border: 1px solid var(--primary); background: #0f172a; color: white; box-sizing: border-box; font-size: 16px; }
+        .btn { width: 100%; background: #0ea5e9; color: white; border: none; padding: 18px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div id="home">
+    <div class="header"><h1>1 Z3T Shop</h1></div>
+    <div class="grid">
+        <div class="card" onclick="openG('HOK')">
+            <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6A8YJ7zO3-Xp5D5rA0a9W8I7M3u-M-KzXqA&s"></div>
+            <div class="card-name">Honor of Kings</div>
+        </div>
+        <div class="card" onclick="openG('MLBB')">
+            <div class="img-box"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/Mobile_Legends_Bang_Bang_Logo.png/220px-Mobile_Legends_Bang_Bang_Logo.png"></div>
+            <div class="card-name">Mobile Legends</div>
+        </div>
+        <div class="card" onclick="openG('PUBG')">
+            <div class="img-box"><img src="https://w7.pngwing.com/pngs/351/728/png-transparent-pubg-mobile-logo-game-pubg-mobile-games-thumbnail.png"></div>
+            <div class="card-name">PUBG Mobile</div>
+        </div>
+        <div class="card" onclick="openG('FF')">
+            <div class="img-box"><img src="https://upload.wikimedia.org/wikipedia/en/2/21/Free_Fire_Logo.png"></div>
+            <div class="card-name">Free Fire</div>
+        </div>
+    </div>
+</div>
+
+<div id="modal">
+    <button onclick="closeG()" style="color:var(--primary); background:none; border:1px solid var(--primary); padding:8px 15px; border-radius:8px; cursor:pointer;">← BACK</button>
+    <h2 id="g-title" style="color:var(--primary); margin-top:20px;"></h2>
+    <div id="g-list"></div>
+    <div class="pay-info">
+        <b>Payment Methods:</b><br>
+        Kpay/Wave: 09752671391
+    </div>
+    <input type="text" id="sel-pkg" readonly placeholder="No package selected">
+    <input type="text" id="p-id" placeholder="Enter Player ID">
+    <button class="btn" onclick="sendOrder()">CONFIRM ORDER</button>
+</div>
+
+<script>
+const db = {
+    'HOK': [{n:'17 Tokens', p:'1,200'}, {n:'88 Tokens', p:'5,800'}, {n:'352 Tokens', p:'22,500'}, {n:'716 Tokens', p:'45,000'}],
+    'MLBB': [{n:'Weekly Pass', p:'5,500'}, {n:'86 Diamonds', p:'4,300'}, {n:'172 Diamonds', p:'8,500'}, {n:'706 Diamonds', p:'33,000'}],
+    'PUBG': [{n:'60 UC', p:'3,200'}, {n:'325 UC', p:'15,000'}, {n:'660 UC', p:'29,000'}, {n:'1800 UC', p:'75,000'}],
+    'FF': [{n:'100 Diamonds', p:'2,800'}, {n:'210 Diamonds', p:'5,500'}, {n:'530 Diamonds', p:'13,500'}, {n:'1080 Diamonds', p:'26,500'}]
+};
+
+function openG(id) {
+    document.getElementById('g-title').innerText = id + " Packages";
+    const list = document.getElementById('g-list');
+    list.innerHTML = "";
+    db[id].forEach(item => {
+        list.innerHTML += `<div class="item" onclick="document.getElementById('sel-pkg').value='${id} - ${item.n}'"><span>${item.n}</span><span style="color:var(--primary)">${item.p} MMK</span></div>`;
+    });
+    document.getElementById('home').style.display = 'none';
+    document.getElementById('modal').style.display = 'block';
+}
+
+function closeG() { document.getElementById('modal').style.display = 'none'; document.getElementById('home').style.display = 'block'; }
+
+function sendOrder() {
+    const pkg = document.getElementById('sel-pkg').value;
+    const pid = document.getElementById('p-id').value;
+    if(!pkg || !pid) return Swal.fire('Error', 'Select package and enter ID!', 'error');
+    
+    fetch(`https://api.telegram.org/bot8721885309:AAG0aGjsB_2voyjyDdWjU_KDiRNNGfyVlF0/sendMessage?chat_id=8727691110&text=🎯 *NEW ORDER*%0AItem: ${pkg}%0AID: ${pid}&parse_mode=Markdown`)
+    .then(() => {
+        Swal.fire('Success!', 'Order sent to 1 Z3T Shop.', 'success').then(() => closeG());
+    });
+}
+</script>
+</body>
+</html>
 
