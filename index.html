@@ -1,1 +1,199 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 Z3T Shop</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            /* Background ပုံ link ကို သေချာတာတစ်ခု ပြောင်းထားတယ် */
+            background: url('https://images.alphacoders.com/134/1341144.png') no-repeat center center fixed; 
+            background-size: cover;
+            color: #e2e8f0; 
+            margin: 0; padding: 0;
+            overflow-y: auto; 
+        }
+
+        /* Overlay ကို ခပ်ပါးပါးလေးပဲ ထားလိုက်မယ် ပုံကို မြင်ရအောင် */
+        .bg-overlay { 
+            position: fixed; 
+            top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0, 0, 0, 0.4); /* 0.4 ဆိုရင် ပုံက အကြည်သားလေး ပေါ်နေမှာပါ */
+            z-index: -1; 
+        }
+
+        .container { max-width: 500px; margin: auto; padding: 20px; position: relative; }
+        
+        .header { 
+            text-align: center; padding: 30px 20px; 
+            background: rgba(30, 41, 59, 0.7); 
+            backdrop-filter: blur(10px); 
+            border-radius: 24px; margin-bottom: 30px; 
+            border: 1px solid rgba(56, 189, 248, 0.3); 
+        }
+
+        .header h2 { color: #38bdf8; margin: 0; font-size: 28px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .section-title { font-size: 18px; font-weight: bold; margin: 25px 0 15px 5px; color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,1); display: flex; align-items: center; gap: 10px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
+        
+        .service-card { 
+            background: rgba(30, 41, 59, 0.6); 
+            backdrop-filter: blur(8px); 
+            border-radius: 22px; overflow: hidden; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            cursor: pointer; 
+        }
+        
+        .img-container { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fff; display: flex; align-items: center; justify-content: center; }
+        .service-card img { width: 85%; height: 85%; object-fit: contain; }
+        .service-card span { display: block; padding: 12px; text-align: center; font-weight: 600; font-size: 14px; background: rgba(15, 23, 42, 0.8); }
+
+        /* Detail Views တွေမှာလည်း ပုံမပျောက်အောင် background-color ကို ဖယ်ထားတယ် */
+        #detail-view, #package-view { 
+            display: none; position: fixed; 
+            top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: 1000; overflow-y: auto; 
+            padding: 20px; box-sizing: border-box;
+            background: rgba(15, 23, 42, 0.6); /* ပုံမြင်ရအောင် ခပ်မှိန်မှိန်ပဲ ထားတယ် */
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn { background: #38bdf8; border: none; color: #000; padding: 12px 20px; border-radius: 12px; cursor: pointer; margin-bottom: 20px; font-weight: bold; }
+        .list-item { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(5px); margin-bottom: 12px; padding: 18px; border-radius: 18px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; }
+        .price-list { background: rgba(30, 41, 59, 0.9); border-radius: 20px; overflow: hidden; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .price-item { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); cursor: pointer; }
+        .price-item.selected { background: rgba(56, 189, 248, 0.3); border-left: 5px solid #38bdf8; }
+        .order-form { margin-top: 30px; background: rgba(30, 41, 59, 0.8); padding: 25px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); }
+        input { width: 100%; padding: 16px; margin: 12px 0; border-radius: 12px; border: 1px solid #334155; background: rgba(15, 23, 42, 0.9); color: white; outline: none; box-sizing: border-box; }
+        .buy-btn { width: 100%; background: linear-gradient(45deg, #0ea5e9, #2563eb); color: white; border: none; padding: 18px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="bg-overlay"></div>
+
+<div id="home-view" class="container">
+    <div class="header"><h2>1 Z3T Shop</h2></div>
+    <div class="section-title"><i class="fas fa-gamepad"></i> GAME SERVICES</div>
+    <div class="grid" id="game-grid"></div>
+    <div class="section-title"><i class="fas fa-share-alt"></i> SOCIAL SERVICES</div>
+    <div class="grid" id="social-grid"></div>
+</div>
+
+<div id="detail-view">
+    <div class="container">
+        <button class="back-btn" onclick="closeDetail()">BACK</button>
+        <h3 id="detail-title" style="color:#38bdf8; text-shadow: 2px 2px 5px #000;"></h3>
+        <div id="sub-service-container"></div>
+    </div>
+</div>
+
+<div id="package-view">
+    <div class="container">
+        <button class="back-btn" onclick="closePackage()">BACK</button>
+        <h3 id="package-title" style="color:#38bdf8; text-shadow: 2px 2px 5px #000;"></h3>
+        <div class="price-list" id="price-container"></div>
+        <div class="order-form">
+            <input type="text" id="selected-item" readonly placeholder="ရွေးချယ်ထားသော ဝန်ဆောင်မှု">
+            <input type="text" id="user-id" placeholder="Account ID / Link">
+            <button class="buy-btn" onclick="sendOrder()">CONFIRM ORDER</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const allPrices = {
+    'Weekly Diamond Pass': [{ n: '1 Pass', p: '5,500 K' }, { n: '2 Pass', p: '11,000 K' }],
+    'MLBB Diamonds': [{ n: '86 Diamonds', p: '4,500 K' }, { n: '172 Diamonds', p: '8,800 K' }],
+    'PUBG UC': [{ n: '60 UC', p: '3,200 K' }, { n: '325 UC', p: '15,000 K' }],
+    'Free Fire Diamonds': [{ n: '100 Diamonds', p: '2,800 K' }],
+    'Telegram Members (Non-Drop)': [{ n: '500 Members', p: '3,500 K' }, { n: '1000 Members', p: '6,500 K' }],
+    'Telegram Premium': [{ n: '1 Month', p: '12,500 K' }],
+    'YouTube Subscribers': [{ n: '100 Subs', p: '2,500 K' }],
+    'Instagram Likes': [{ n: '500 Likes', p: '800 K' }],
+    'Instagram Followers': [{ n: '500 Followers', p: '1,500 K' }],
+    'TikTok Likes': [{ n: '1000 Likes', p: '3,200 K' }],
+    'Facebook Followers': [{ n: '1000 Followers', p: '2,500 K' }]
+};
+
+const games = [
+    { id: 'MLBB', name: 'Mobile Legends', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/Mobile_Legends_Bang_Bang_Logo.png/220px-Mobile_Legends_Bang_Bang_Logo.png' },
+    { id: 'PUBG', name: 'PUBG Mobile', img: 'https://w7.pngwing.com/pngs/351/728/png-transparent-pubg-mobile-logo-game-pubg-mobile-games-thumbnail.png' },
+    { id: 'FF', name: 'Free Fire', img: 'https://upload.wikimedia.org/wikipedia/en/2/21/Free_Fire_Logo.png' }
+];
+
+const socials = [
+    { id: 'Telegram', name: 'Telegram', img: 'https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg' },
+    { id: 'Facebook', name: 'Facebook', img: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_(2019).png' },
+    { id: 'TikTok', name: 'TikTok', img: 'https://i.ibb.co/9Gf3Y2r/tiktok.png' },
+    { id: 'YouTube', name: 'YouTube', img: 'https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg' },
+    { id: 'Instagram', name: 'Instagram', img: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg' }
+];
+
+const subData = {
+    'MLBB': [{ name: 'Weekly Diamond Pass', icon: 'fas fa-gem', color: '#38bdf8' }, { name: 'MLBB Diamonds', icon: 'fas fa-gem', color: '#38bdf8' }],
+    'PUBG': [{ name: 'PUBG UC', icon: 'fas fa-coins', color: '#facc15' }],
+    'FF': [{ name: 'Free Fire Diamonds', icon: 'fas fa-gem', color: '#ef4444' }],
+    'Telegram': [{ name: 'Telegram Members (Non-Drop)', icon: 'fab fa-telegram', color: '#24A1DE' }, { name: 'Telegram Premium', icon: 'fas fa-star', color: '#8E44AD' }],
+    'YouTube': [{ name: 'YouTube Subscribers', icon: 'fab fa-youtube', color: '#FF0000' }],
+    'Instagram': [{ name: 'Instagram Likes', icon: 'fab fa-instagram', color: '#e1306c' }, { name: 'Instagram Followers', icon: 'fab fa-instagram', color: '#e1306c' }],
+    'TikTok': [{ name: 'TikTok Likes', icon: 'fab fa-tiktok', color: '#ff0050' }],
+    'Facebook': [{ name: 'Facebook Followers', icon: 'fab fa-facebook', color: '#1877f2' }]
+};
+
+function render() {
+    games.forEach(g => document.getElementById('game-grid').innerHTML += `<div class="service-card" onclick="openDetail('${g.id}')"><div class="img-container"><img src="${g.img}"></div><span>${g.name}</span></div>`);
+    socials.forEach(s => document.getElementById('social-grid').innerHTML += `<div class="service-card" onclick="openDetail('${s.id}')"><div class="img-container"><img src="${s.img}"></div><span>${s.name}</span></div>`);
+}
+render();
+
+function openDetail(id) {
+    const container = document.getElementById('sub-service-container');
+    container.innerHTML = "";
+    (subData[id] || []).forEach(sub => {
+        container.innerHTML += `<div class="list-item" onclick="openPackages('${sub.name}')"><i class="${sub.icon}" style="color:${sub.color}"></i><span>${sub.name}</span></div>`;
+    });
+    document.getElementById('detail-title').innerText = id + " Services";
+    document.getElementById('home-view').style.display = "none";
+    document.getElementById('detail-view').style.display = "block";
+}
+
+function openPackages(subName) {
+    document.getElementById('package-title').innerText = subName;
+    const container = document.getElementById('price-container');
+    container.innerHTML = "";
+    const prices = allPrices[subName] || [{n: 'Coming Soon', p: '-'}];
+    prices.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'price-item';
+        div.innerHTML = `<div><b>${item.n}</b></div><span style="color:#38bdf8">${item.p}</span>`;
+        div.onclick = () => {
+            if(item.p === '-') return;
+            document.querySelectorAll('.price-item').forEach(el => el.classList.remove('selected'));
+            div.classList.add('selected');
+            document.getElementById('selected-item').value = subName + " (" + item.n + ")";
+        };
+        container.appendChild(div);
+    });
+    document.getElementById('detail-view').style.display = "none";
+    document.getElementById('package-view').style.display = "block";
+}
+
+function closeDetail() { document.getElementById('detail-view').style.display = "none"; document.getElementById('home-view').style.display = "block"; }
+function closePackage() { document.getElementById('package-view').style.display = "none"; document.getElementById('detail-view').style.display = "block"; }
+
+function sendOrder() {
+    const item = document.getElementById('selected-item').value;
+    const id = document.getElementById('user-id').value;
+    if(!item || !id) return Swal.fire('Error', 'အချက်အလက်ဖြည့်ပါ', 'error');
+    fetch(`https://api.telegram.org/bot8721885309:AAG0aGjsB_2voyjyDdWjU_KDiRNNGfyVlF0/sendMessage?chat_id=8727691110&text=🚀 *New Order*%0AItem: ${item}%0AID: ${id}&parse_mode=Markdown`)
+    .then(() => Swal.fire('Success', 'အော်ဒါပို့ပြီးပါပြီ', 'success').then(() => { closePackage(); closeDetail(); }));
+}
+</script>
+</body>
+</html>
 
