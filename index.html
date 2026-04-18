@@ -3,68 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I Z3T DIGITAL PRODUCT SELLER</title>
+    <title>I Z3T SHOP - Official</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #0b0e14; color: #ffffff; font-family: 'Inter', sans-serif; }
-        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; }
-        .active-tab { background-color: #6366f1; box-shadow: 0 0 15px rgba(99, 102, 241, 0.5); }
-        .input-field { background: #1a1f2e; border: 1px solid #334155; border-radius: 8px; width: 100%; padding: 12px; color: white; margin-bottom: 12px; }
-        .price-card { background: #1e293b; border: 1px solid #334155; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; }
-        .price-card:hover { border-color: #6366f1; background: #243049; }
-        .price-card.selected { border-color: #6366f1; background: rgba(99, 102, 241, 0.1); }
+        body { background-color: #0b101a; color: #ffffff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .glass-card { background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; }
+        .active-btn { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4); }
+        .input-field { background: #161b26; border: 1px solid #2d3748; border-radius: 14px; width: 100%; padding: 16px; color: white; outline: none; transition: 0.3s; }
+        .input-field:focus { border-color: #6366f1; box-shadow: 0 0 10px rgba(99, 102, 241, 0.2); }
+        .price-card { background: #1a1f2e; border: 1px solid #2d3748; padding: 14px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; }
+        .price-card:hover { border-color: #6366f1; transform: translateY(-3px); }
+        .price-card.selected { border-color: #6366f1; background: rgba(99, 102, 241, 0.15); box-shadow: 0 0 15px rgba(99, 102, 241, 0.3); }
+        .custom-alert { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; z-index: 1000; }
     </style>
 </head>
-<body class="p-4 pb-10">
+<body class="p-5 pb-16">
+    <div id="customAlert" class="custom-alert">
+        <div class="bg-[#1e293b] border border-slate-700 p-8 rounded-[30px] max-w-sm w-full text-center mx-4 shadow-2xl">
+            <div class="text-indigo-400 text-6xl mb-4">⚠️</div>
+            <p id="alertMsg" class="text-gray-200 font-medium mb-8 leading-relaxed"></p>
+            <button onclick="closeAlert()" class="w-full py-4 active-btn rounded-2xl font-bold uppercase tracking-widest text-sm">Got it</button>
+        </div>
+    </div>
+
     <div class="max-w-md mx-auto">
-        <div class="flex items-center space-x-3 mt-4 mb-6">
-            <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg">💎</div>
-            <div>
-                <h1 class="font-bold text-xl uppercase tracking-wider">I Z3T SHOP</h1>
-                <p class="text-xs text-gray-400">Official Gaming Service</p>
+        <div class="text-center mb-10">
+            <p class="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.4em] mb-2">Welcome to</p>
+            <div class="relative inline-block mb-4">
+                <img src="https://raw.githubusercontent.com/iz3t/I_Z3T-Store/main/logo.jpg" alt="Logo" class="w-24 h-24 rounded-full border-4 border-indigo-600 shadow-2xl">
+                <div class="absolute -bottom-1 -right-1 bg-green-500 w-5 h-5 rounded-full border-4 border-[#0b101a]"></div>
+            </div>
+            <h1 class="text-3xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 italic">I Z3T SHOP</h1>
+        </div>
+
+        <div class="glass-card p-6 mb-6">
+            <h3 class="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-4 flex items-center">
+                <span class="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span> 01. Game Account
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+                <input type="number" id="gameId" placeholder="User ID" class="input-field text-sm font-bold">
+                <input type="number" id="serverId" placeholder="(Server)" class="input-field text-sm font-bold">
             </div>
         </div>
 
-        <div class="glass-card p-5 mb-6">
-            <h3 class="text-xs font-bold mb-3 text-indigo-400 uppercase">1. Account Details</h3>
-            <div class="grid grid-cols-2 gap-3">
-                <input type="number" id="gameId" placeholder="User ID" class="input-field">
-                <input type="number" id="serverId" placeholder="(Server)" class="input-field">
-            </div>
-        </div>
-
-        <div class="glass-card p-5 mb-6">
-            <h3 class="text-xs font-bold mb-4 text-indigo-400 uppercase">2. Select Your Plan</h3>
+        <div class="glass-card p-6 mb-6">
+            <h3 class="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-4 flex items-center">
+                <span class="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span> 02. Select Packages
+            </h3>
             <div id="priceList" class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
                 </div>
         </div>
 
-        <div class="glass-card p-5 mb-6">
-            <h3 class="text-xs font-bold mb-3 text-indigo-400 uppercase">3. Payment Details</h3>
-            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-sm space-y-2">
-                <div class="flex justify-between"><span>KPay:</span> <span class="font-mono text-indigo-300">09971941600</span></div>
-                <div class="flex justify-between"><span>Wave:</span> <span class="font-mono text-indigo-300">09799747004</span></div>
-                <div class="text-center pt-2 text-xs text-gray-500 font-bold uppercase">Name: Khant Min Hein</div>
+        <div class="glass-card p-6 mb-6">
+            <h3 class="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-4 flex items-center text-center justify-center">
+                Official Payment Methods
+            </h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/KBZPay_logo.png/600px-KBZPay_logo.png" class="h-6 rounded" alt="KPay">
+                    <div class="text-right">
+                        <p class="text-[10px] text-gray-500 font-bold">09971941600</p>
+                        <p class="text-[10px] text-indigo-400 font-black">Khant Min Hein</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
+                    <img src="https://play-lh.googleusercontent.com/9G7i7vY1M_w8E5u9X6pW9X7-1u8i-w-M8Y-Y8M-Y8M-Y8M-Y8M-Y8M-Y8M-Y8M" class="h-6 rounded" alt="Wave">
+                    <div class="text-right">
+                        <p class="text-[10px] text-gray-500 font-bold">09799747004</p>
+                        <p class="text-[10px] text-indigo-400 font-black">Khant Min Hein</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="glass-card p-5">
-            <h3 class="text-xs font-bold mb-3 text-indigo-400 uppercase">4. Upload Receipt & Confirm</h3>
-            <input type="file" id="receipt" class="text-xs mb-4 block w-full text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700">
-            <button onclick="sendToTelegram()" class="w-full py-4 active-tab rounded-xl font-bold uppercase tracking-widest text-sm shadow-xl">Place Order Now</button>
+        <div class="glass-card p-6 mb-8">
+            <input type="file" id="receipt" class="hidden">
+            <label for="receipt" class="block w-full py-4 bg-slate-800/50 rounded-2xl text-xs font-bold text-gray-400 cursor-pointer border-2 border-dashed border-slate-700 hover:border-indigo-500 text-center mb-6 transition-all">
+                Upload Payment Receipt
+            </label>
+            <button onclick="sendToTelegram()" class="w-full py-5 active-btn rounded-3xl font-black uppercase tracking-[0.2em] text-sm shadow-2xl transition-all active:scale-95">
+                Buy Now
+            </button>
+        </div>
+
+        <div class="text-center space-y-2 opacity-50">
+            <p class="text-[11px] font-bold text-indigo-300">ဝယ်ယူမှုအတွက် ကျေးဇူးတင်ပါသည်</p>
+            <p class="text-[9px] uppercase tracking-widest">Powered by I Z3T Team</p>
         </div>
     </div>
 
     <script>
         const diamondPrices = [
-            { d: "Weekly Diamond Pass", p: 6500, rcg: "" },
-            { d: 5, p: 600, rcg: "" }, { d: 11, p: 900, rcg: "" }, { d: 22, p: 1800, rcg: "" },
-            { d: 55, p: 3700, rcg: "" }, { d: 86, p: 5300, rcg: "" }, { d: 110, p: 7200, rcg: "100 rcg" },
-            { d: 172, p: 10500, rcg: "" }, { d: 257, p: 15200, rcg: "" }, { d: 343, p: 20500, rcg: "" },
-            { d: 429, p: 25500, rcg: "" }, { d: 514, p: 30500, rcg: "" }, { d: 600, p: 35500, rcg: "" },
-            { d: 706, p: 41000, rcg: "" }, { d: 878, p: 51500, rcg: "" }, { d: 963, p: 56500, rcg: "" },
-            { d: 1135, p: 66500, rcg: "" }, { d: 2195, p: 125000, rcg: "" }, { d: 3688, p: 205000, rcg: "" },
-            { d: 5532, p: 310000, rcg: "" }, { d: 11483, p: 660000, rcg: "" }
+            { d: "Weekly Diamond Pass", p: 6500 },
+            { d: 5, p: 600 }, { d: 11, p: 900 }, { d: 22, p: 1800 },
+            { d: 55, p: 3700 }, { d: 86, p: 5300 }, { d: 110, p: 7200 },
+            { d: 172, p: 10500 }, { d: 257, p: 15200 }, { d: 343, p: 20500 },
+            { d: 429, p: 25500 }, { d: 514, p: 30500 }, { d: 600, p: 35500 },
+            { d: 706, p: 41000 }, { d: 878, p: 51500 }, { d: 963, p: 56500 },
+            { d: 1135, p: 66500 }, { d: 2195, p: 125000 }, { d: 3688, p: 205000 },
+            { d: 5532, p: 310000 }, { d: 11483, p: 660000 }
         ];
 
         let selectedPlan = "";
@@ -74,11 +112,11 @@
             const card = document.createElement('div');
             card.className = 'price-card';
             card.innerHTML = `
-                <div>
-                    <span class="font-bold">${item.d}</span> 
-                    <span class="text-[10px] text-gray-500 ml-1">${item.rcg}</span>
+                <div class="flex items-center space-x-3">
+                    <span class="text-indigo-400">💎</span>
+                    <div class="font-bold text-sm">${item.d} <span class="text-[9px] text-gray-600 font-normal ml-1">DIAMONDS</span></div>
                 </div>
-                <div class="font-bold text-indigo-400">${item.p} Ks</div>
+                <div class="font-black text-indigo-400 text-sm">${item.p.toLocaleString()} Ks</div>
             `;
             card.onclick = () => {
                 document.querySelectorAll('.price-card').forEach(c => c.classList.remove('selected'));
@@ -88,15 +126,23 @@
             listDiv.appendChild(card);
         });
 
+        function showAlert(text) {
+            document.getElementById('alertMsg').innerText = text;
+            document.getElementById('customAlert').style.display = 'flex';
+        }
+
+        function closeAlert() { document.getElementById('customAlert').style.display = 'none'; }
+
         function sendToTelegram() {
             const gid = document.getElementById('gameId').value;
             const sid = document.getElementById('serverId').value;
-            if(!gid || !sid || !selectedPlan) { alert("အချက်အလက်အားလုံး ပြည့်စုံအောင် ဖြည့်ပေးပါဗျ!"); return; }
-            
-            const msg = `🚀 NEW ORDER!\n\n👤 Game ID: ${gid} (${sid})\n💎 Plan: ${selectedPlan}\n💰 Method: KPay/Wave\n\n(Receipt uploaded on website)`;
+            if(!gid || !sid || !selectedPlan) { 
+                showAlert("အချက်အလက်အားလုံး ပြည့်စုံအောင် ဖြည့်ပေးပါဗျ!"); 
+                return; 
+            }
+            const msg = `🚀 NEW BUY ORDER!\n\n👤 Game ID: ${gid} (${sid})\n💎 Plan: ${selectedPlan}\n💰 Method: KPay/Wave\n\nCheck receipt on site!`;
             window.location.href = `https://t.me/IZ3T_BOT?text=${encodeURIComponent(msg)}`;
         }
     </script>
 </body>
 </html>
-
