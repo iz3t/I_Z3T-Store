@@ -9,7 +9,8 @@
     <style>
         :root { --neon: #6366f1; --accent: #a855f7; }
         body {
-            background-image: linear-gradient(rgba(3, 7, 18, 0.94), rgba(3, 7, 18, 0.94)), url('bg.png');
+            /* Path ကို Folder နာမည်နဲ့ ပြန်ညှိထားပါတယ် */
+            background-image: linear-gradient(rgba(3, 7, 18, 0.94), rgba(3, 7, 18, 0.94)), url('./bg.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -26,26 +27,23 @@
         .price-card.selected { border: 2px solid var(--neon); background: rgba(99, 102, 241, 0.15); box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.1); }
         .logo-anim { animation: float 4s ease-in-out infinite; box-shadow: 0 0 50px rgba(99, 102, 241, 0.3); }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        #priceList::-webkit-scrollbar { width: 5px; }
-        #priceList::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 10px; }
-        
         #customAlert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100; width: 85%; max-width: 320px; }
     </style>
 </head>
 <body class="p-6 pb-24">
     <div class="bg-glow"></div>
 
-    <div id="customAlert" class="glass-card p-8 text-center border-indigo-500/50">
+    <div id="customAlert" class="glass-card p-8 text-center border-indigo-500/50 shadow-2xl">
         <div class="text-4xl mb-4">⚠️</div>
         <p class="text-sm font-bold text-gray-200 mb-6">အချက်အလက်အားလုံး ပြည့်စုံအောင် ဖြည့်ပေးပါဗျ!</p>
-        <button onclick="closeAlert()" class="w-full py-3 neon-btn rounded-xl font-black text-xs uppercase text-white">OK</button>
+        <button onclick="closeAlert()" class="w-full py-3 neon-btn rounded-xl font-black text-xs uppercase text-white tracking-widest">OK</button>
     </div>
 
     <div class="max-w-md mx-auto relative z-10">
         <div class="text-center mb-12">
             <p class="text-[10px] font-black text-indigo-400 tracking-[0.6em] mb-4 opacity-80 uppercase">The King's Realm</p>
             <div class="relative inline-block mb-6">
-                <img src="logo.jpg" alt="Logo" class="w-28 h-28 rounded-full border-4 border-indigo-500/40 logo-anim object-cover">
+                <img src="./logo.jpg" alt="Logo" class="w-28 h-28 rounded-full border-4 border-indigo-500/40 logo-anim object-cover shadow-2xl">
                 <div class="absolute bottom-2 right-2 bg-green-500 w-5 h-5 rounded-full border-4 border-[#030712] animate-pulse"></div>
             </div>
             <h1 class="text-4xl font-extrabold tracking-tighter italic uppercase text-white">I Z3T <span class="text-indigo-500">Shop</span></h1>
@@ -56,8 +54,8 @@
                 <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2"></span> 01. Game Account
             </h3>
             <div class="grid grid-cols-2 gap-4">
-                <input type="number" id="gameId" placeholder="User ID" class="w-full bg-[#030712] border-2 border-slate-800 rounded-2xl p-4 text-sm font-bold outline-none focus:border-indigo-500 transition-all text-white">
-                <input type="number" id="serverId" placeholder="(Server)" class="w-full bg-[#030712] border-2 border-slate-800 rounded-2xl p-4 text-sm font-bold outline-none focus:border-indigo-500 transition-all text-white">
+                <input type="number" id="gameId" placeholder="User ID" class="w-full bg-[#030712] border-2 border-slate-800 rounded-2xl p-4 text-sm font-bold outline-none focus:border-indigo-500 transition-all text-white placeholder:text-gray-700">
+                <input type="number" id="serverId" placeholder="(Server)" class="w-full bg-[#030712] border-2 border-slate-800 rounded-2xl p-4 text-sm font-bold outline-none focus:border-indigo-500 transition-all text-white placeholder:text-gray-700">
             </div>
         </div>
 
@@ -72,24 +70,24 @@
             <h3 class="text-[10px] font-black text-center text-gray-500 uppercase tracking-widest mb-6">Official Payment</h3>
             <div class="space-y-3">
                 <div class="flex items-center justify-between bg-black/40 p-4 rounded-2xl border border-slate-800/50">
-                    <img src="kpay.png" class="h-6 rounded" alt="KPay">
+                    <img src="./kpay.png" class="h-6 rounded" alt="KPay">
                     <div class="text-right">
                         <p class="text-xs font-bold text-gray-300">09971941600</p>
-                        <p class="text-[10px] text-indigo-400 font-black uppercase">Khant Min Hein</p>
+                        <p class="text-[10px] text-indigo-400 font-black uppercase tracking-tighter">Khant Min Hein</p>
                     </div>
                 </div>
                 <div class="flex items-center justify-between bg-black/40 p-4 rounded-2xl border border-slate-800/50">
-                    <img src="wave.png" class="h-6 rounded" alt="Wave">
+                    <img src="./wave.png" class="h-6 rounded" alt="Wave">
                     <div class="text-right">
                         <p class="text-xs font-bold text-gray-300">09799747004</p>
-                        <p class="text-[10px] text-indigo-400 font-black uppercase">Khant Min Hein</p>
+                        <p class="text-[10px] text-indigo-400 font-black uppercase tracking-tighter">Khant Min Hein</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="text-center">
-            <button onclick="sendToTelegram()" class="w-full py-5 neon-btn rounded-3xl font-black uppercase tracking-[0.3em] text-sm text-white transition-all active:scale-95 shadow-2xl">
+            <button onclick="sendToTelegram()" class="w-full py-5 neon-btn rounded-3xl font-black uppercase tracking-[0.3em] text-sm text-white transition-all active:scale-95 shadow-indigo-500/20 shadow-2xl">
                 Confirm & Order
             </button>
         </div>
