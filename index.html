@@ -1,1 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Z3T DIGITAL PRODUCT SELLER</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0b0e14; color: #ffffff; font-family: 'Inter', sans-serif; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; }
+        .active-tab { background-color: #6366f1; box-shadow: 0 0 15px rgba(99, 102, 241, 0.5); }
+        .input-field { background: #1a1f2e; border: 1px solid #334155; border-radius: 8px; width: 100%; padding: 12px; color: white; margin-bottom: 12px; }
+        .price-card { background: #1e293b; border: 1px solid #334155; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; }
+        .price-card:hover { border-color: #6366f1; background: #243049; }
+        .price-card.selected { border-color: #6366f1; background: rgba(99, 102, 241, 0.1); }
+    </style>
+</head>
+<body class="p-4 pb-10">
+    <div class="max-w-md mx-auto">
+        <div class="flex items-center space-x-3 mt-4 mb-6">
+            <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg">💎</div>
+            <div>
+                <h1 class="font-bold text-xl uppercase tracking-wider">I Z3T SHOP</h1>
+                <p class="text-xs text-gray-400">Official Gaming Service</p>
+            </div>
+        </div>
+
+        <div class="glass-card p-5 mb-6">
+            <h3 class="text-xs font-bold mb-3 text-indigo-400 uppercase">1. Account Details</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <input type="number" id="gameId" placeholder="User ID" class="input-field">
+                <input type="number" id="serverId" placeholder="(Server)" class="input-field">
+            </div>
+        </div>
+
+        <div class="glass-card p-5 mb-6">
+            <h3 class="text-xs font-bold mb-4 text-indigo-400 uppercase">2. Select Your Plan</h3>
+            <div id="priceList" class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                </div>
+        </div>
+
+        <div class="glass-card p-5 mb-6">
+            <h3 class="text-xs font-bold mb-3 text-indigo-400 uppercase">3. Payment Details</h3>
+            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-sm space-y-2">
+                <div class="flex justify-between"><span>KPay:</span> <span class="font-mono text-indigo-300">09971941600</span></div>
+                <div class="flex justify-between"><span>Wave:</span> <span class="font-mono text-indigo-300">09799747004</span></div>
+                <div class="text-center pt-2 text-xs text-gray-500 font-bold uppercase">Name: Khant Min Hein</div>
+            </div>
+        </div>
+
+        <div class="glass-card p-5">
+            <h3 class="text-xs font-bold mb-3 text-indigo-400 uppercase">4. Upload Receipt & Confirm</h3>
+            <input type="file" id="receipt" class="text-xs mb-4 block w-full text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700">
+            <button onclick="sendToTelegram()" class="w-full py-4 active-tab rounded-xl font-bold uppercase tracking-widest text-sm shadow-xl">Place Order Now</button>
+        </div>
+    </div>
+
+    <script>
+        const diamondPrices = [
+            { d: "Weekly Diamond Pass", p: 6500, rcg: "" },
+            { d: 5, p: 600, rcg: "" }, { d: 11, p: 900, rcg: "" }, { d: 22, p: 1800, rcg: "" },
+            { d: 55, p: 3700, rcg: "" }, { d: 86, p: 5300, rcg: "" }, { d: 110, p: 7200, rcg: "100 rcg" },
+            { d: 172, p: 10500, rcg: "" }, { d: 257, p: 15200, rcg: "" }, { d: 343, p: 20500, rcg: "" },
+            { d: 429, p: 25500, rcg: "" }, { d: 514, p: 30500, rcg: "" }, { d: 600, p: 35500, rcg: "" },
+            { d: 706, p: 41000, rcg: "" }, { d: 878, p: 51500, rcg: "" }, { d: 963, p: 56500, rcg: "" },
+            { d: 1135, p: 66500, rcg: "" }, { d: 2195, p: 125000, rcg: "" }, { d: 3688, p: 205000, rcg: "" },
+            { d: 5532, p: 310000, rcg: "" }, { d: 11483, p: 660000, rcg: "" }
+        ];
+
+        let selectedPlan = "";
+        const listDiv = document.getElementById('priceList');
+
+        diamondPrices.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'price-card';
+            card.innerHTML = `
+                <div>
+                    <span class="font-bold">${item.d}</span> 
+                    <span class="text-[10px] text-gray-500 ml-1">${item.rcg}</span>
+                </div>
+                <div class="font-bold text-indigo-400">${item.p} Ks</div>
+            `;
+            card.onclick = () => {
+                document.querySelectorAll('.price-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selectedPlan = `${item.d} (${item.p} Ks)`;
+            };
+            listDiv.appendChild(card);
+        });
+
+        function sendToTelegram() {
+            const gid = document.getElementById('gameId').value;
+            const sid = document.getElementById('serverId').value;
+            if(!gid || !sid || !selectedPlan) { alert("အချက်အလက်အားလုံး ပြည့်စုံအောင် ဖြည့်ပေးပါဗျ!"); return; }
+            
+            const msg = `🚀 NEW ORDER!\n\n👤 Game ID: ${gid} (${sid})\n💎 Plan: ${selectedPlan}\n💰 Method: KPay/Wave\n\n(Receipt uploaded on website)`;
+            window.location.href = `https://t.me/IZ3T_BOT?text=${encodeURIComponent(msg)}`;
+        }
+    </script>
+</body>
+</html>
 
