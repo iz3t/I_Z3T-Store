@@ -9,8 +9,7 @@
     <style>
         :root { --neon: #6366f1; --accent: #a855f7; }
         body {
-            /* Gojo Manga BG ကို Dark Mode ချိန်ညှိထားပါတယ် */
-            background-image: linear-gradient(rgba(3, 7, 18, 0.92), rgba(3, 7, 18, 0.92)), url('bg.png');
+            background-image: linear-gradient(rgba(3, 7, 18, 0.94), rgba(3, 7, 18, 0.94)), url('bg.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -19,34 +18,37 @@
             overflow-x: hidden;
             margin: 0;
         }
-        
         .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, #1e1b4b 0%, transparent 60%); z-index: -1; }
         .glass-card { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(20px); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 28px; box-shadow: 0 20px 50px -15px rgba(0,0,0,0.8); }
         .neon-btn { background: linear-gradient(135deg, var(--neon), var(--accent)); box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); border: none; }
-        .neon-btn:hover { transform: translateY(-3px); box-shadow: 0 0 35px rgba(99, 102, 241, 0.6); }
-
         .price-card { background: #0f172a; border: 1.5px solid #1e293b; padding: 16px; border-radius: 20px; transition: 0.3s; cursor: pointer; }
         .price-card:hover { border-color: var(--neon); background: #1e1b4b; transform: scale(1.02); }
         .price-card.selected { border: 2px solid var(--neon); background: rgba(99, 102, 241, 0.15); box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.1); }
-        
         .logo-anim { animation: float 4s ease-in-out infinite; box-shadow: 0 0 50px rgba(99, 102, 241, 0.3); }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        
         #priceList::-webkit-scrollbar { width: 5px; }
         #priceList::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 10px; }
+        
+        #customAlert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100; width: 85%; max-width: 320px; }
     </style>
 </head>
 <body class="p-6 pb-24">
     <div class="bg-glow"></div>
 
+    <div id="customAlert" class="glass-card p-8 text-center border-indigo-500/50">
+        <div class="text-4xl mb-4">⚠️</div>
+        <p class="text-sm font-bold text-gray-200 mb-6">အချက်အလက်အားလုံး ပြည့်စုံအောင် ဖြည့်ပေးပါဗျ!</p>
+        <button onclick="closeAlert()" class="w-full py-3 neon-btn rounded-xl font-black text-xs uppercase text-white">OK</button>
+    </div>
+
     <div class="max-w-md mx-auto relative z-10">
         <div class="text-center mb-12">
             <p class="text-[10px] font-black text-indigo-400 tracking-[0.6em] mb-4 opacity-80 uppercase">The King's Realm</p>
             <div class="relative inline-block mb-6">
-                <img src="logo.jpg" alt="Logo" class="w-28 h-28 rounded-full border-4 border-indigo-500/40 logo-anim object-cover shadow-2xl">
+                <img src="logo.jpg" alt="Logo" class="w-28 h-28 rounded-full border-4 border-indigo-500/40 logo-anim object-cover">
                 <div class="absolute bottom-2 right-2 bg-green-500 w-5 h-5 rounded-full border-4 border-[#030712] animate-pulse"></div>
             </div>
-            <h1 class="text-4xl font-extrabold tracking-tighter italic uppercase text-white">I Z3T <span class="text-indigo-500">SHOP</span></h1>
+            <h1 class="text-4xl font-extrabold tracking-tighter italic uppercase text-white">I Z3T <span class="text-indigo-500">Shop</span></h1>
         </div>
 
         <div class="glass-card p-6 mb-8">
@@ -63,43 +65,33 @@
             <h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 mb-5 flex items-center">
                 <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2"></span> 02. Select Packages
             </h3>
-            <div id="priceList" class="space-y-3 max-h-[450px] overflow-y-auto pr-2">
-                </div>
+            <div id="priceList" class="space-y-3 max-h-[400px] overflow-y-auto pr-2"></div>
         </div>
 
         <div class="glass-card p-6 mb-8">
             <h3 class="text-[10px] font-black text-center text-gray-500 uppercase tracking-widest mb-6">Official Payment</h3>
             <div class="space-y-3">
                 <div class="flex items-center justify-between bg-black/40 p-4 rounded-2xl border border-slate-800/50">
-                    <img src="kpay.png" class="h-6 rounded shadow-lg" alt="KPay">
+                    <img src="kpay.png" class="h-6 rounded" alt="KPay">
                     <div class="text-right">
                         <p class="text-xs font-bold text-gray-300">09971941600</p>
-                        <p class="text-[10px] text-indigo-400 font-black uppercase tracking-tighter">Khant Min Hein</p>
+                        <p class="text-[10px] text-indigo-400 font-black uppercase">Khant Min Hein</p>
                     </div>
                 </div>
                 <div class="flex items-center justify-between bg-black/40 p-4 rounded-2xl border border-slate-800/50">
-                    <img src="wave.png" class="h-6 rounded shadow-lg" alt="Wave">
+                    <img src="wave.png" class="h-6 rounded" alt="Wave">
                     <div class="text-right">
                         <p class="text-xs font-bold text-gray-300">09799747004</p>
-                        <p class="text-[10px] text-indigo-400 font-black uppercase tracking-tighter">Khant Min Hein</p>
+                        <p class="text-[10px] text-indigo-400 font-black uppercase">Khant Min Hein</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="text-center">
-            <input type="file" id="receipt" class="hidden">
-            <label for="receipt" class="block w-full py-4 bg-slate-900/50 rounded-2xl text-[10px] font-black text-indigo-300 cursor-pointer border-2 border-dashed border-indigo-500/20 mb-6 hover:bg-indigo-500/10 transition-all uppercase tracking-widest">
-                UPLOAD PAYMENT RECEIPT
-            </label>
-            <button onclick="sendToTelegram()" class="w-full py-5 neon-btn rounded-3xl font-black uppercase tracking-[0.3em] text-sm text-white transition-all active:scale-95">
+            <button onclick="sendToTelegram()" class="w-full py-5 neon-btn rounded-3xl font-black uppercase tracking-[0.3em] text-sm text-white transition-all active:scale-95 shadow-2xl">
                 Confirm & Order
             </button>
-        </div>
-
-        <div class="mt-12 text-center space-y-3">
-            <p class="text-xs font-bold text-indigo-400 italic">ဝယ်ယူမှုအတွက် ကျေးဇူးတင်ပါသည်</p>
-            <p class="text-[9px] uppercase tracking-[0.4em] text-gray-600 font-black">Secure & Instant by I Z3T TEAM</p>
         </div>
     </div>
 
@@ -121,16 +113,7 @@
         diamondPrices.forEach(item => {
             const card = document.createElement('div');
             card.className = 'price-card flex justify-between items-center';
-            card.innerHTML = `
-                <div class="flex items-center space-x-4">
-                    <span class="text-xl">💎</span>
-                    <div>
-                        <p class="font-bold text-sm text-white">${item.d}</p>
-                        <p class="text-[8px] text-gray-600 uppercase font-black tracking-widest">Diamonds</p>
-                    </div>
-                </div>
-                <p class="font-black text-indigo-400 text-sm">${item.p.toLocaleString()} Ks</p>
-            `;
+            card.innerHTML = `<div class="flex items-center space-x-4"><span class="text-xl">💎</span><div><p class="font-bold text-sm text-white">${item.d}</p><p class="text-[8px] text-gray-600 uppercase font-black tracking-widest">Diamonds</p></div></div><p class="font-black text-indigo-400 text-sm">${item.p.toLocaleString()} Ks</p>`;
             card.onclick = () => {
                 document.querySelectorAll('.price-card').forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
@@ -139,14 +122,14 @@
             listDiv.appendChild(card);
         });
 
+        function showAlert() { document.getElementById('customAlert').style.display = 'block'; }
+        function closeAlert() { document.getElementById('customAlert').style.display = 'none'; }
+
         function sendToTelegram() {
             const gid = document.getElementById('gameId').value;
             const sid = document.getElementById('serverId').value;
-            if(!gid || !sid || !selectedPlan) { 
-                alert("အချက်အလက်အားလုံး ပြည့်စုံအောင် ဖြည့်ပေးပါဗျ!"); 
-                return; 
-            }
-            const msg = `🚀 NEW BUY ORDER!\n\n👤 Game ID: ${gid} (${sid})\n💎 Plan: ${selectedPlan}\n💰 Method: KPay/Wave\n\nCheck receipt on site!`;
+            if(!gid || !sid || !selectedPlan) { showAlert(); return; }
+            const msg = `🚀 NEW BUY ORDER!\n\n👤 Game ID: ${gid} (${sid})\n💎 Plan: ${selectedPlan}\n💰 Method: KPay/Wave`;
             window.location.href = `https://t.me/IZ3T_BOT?text=${encodeURIComponent(msg)}`;
         }
     </script>
