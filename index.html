@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -48,7 +48,7 @@
 
         <div class="glass-card p-5 mb-5">
             <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 mb-4 flex items-center">
-                <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2"></span> 01. ID & Server
+                <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2"></span> 01. Account Info
             </h3>
             <div class="grid grid-cols-2 gap-3">
                 <input type="number" id="gameId" placeholder="User ID" class="w-full bg-[#030712] border border-slate-800 rounded-xl p-4 text-sm font-bold outline-none focus:border-indigo-500 text-white placeholder:text-gray-700">
@@ -67,20 +67,20 @@
             <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 mb-4 flex items-center">
                 <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2"></span> 03. Payment Receipt
             </h3>
-            <div class="grid grid-cols-2 gap-2 mb-4">
-                <div class="bg-black/40 p-3 rounded-xl border border-slate-800/50 flex flex-col items-center">
-                    <img src="./kpay.png" class="h-4 mb-2" alt="KPay">
-                    <p class="text-[10px] font-bold text-gray-300">09971941600</p>
+            <div class="grid grid-cols-2 gap-2 mb-4 text-center">
+                <div class="bg-black/40 p-3 rounded-xl border border-slate-800/50">
+                    <img src="./kpay.png" class="h-4 mx-auto mb-2" alt="KPay">
+                    <p class="text-[9px] font-bold text-gray-300">09971941600</p>
                 </div>
-                <div class="bg-black/40 p-3 rounded-xl border border-slate-800/50 flex flex-col items-center">
-                    <img src="./wave.png" class="h-4 mb-2" alt="Wave">
-                    <p class="text-[10px] font-bold text-gray-300">09799747004</p>
+                <div class="bg-black/40 p-3 rounded-xl border border-slate-800/50">
+                    <img src="./wave.png" class="h-4 mx-auto mb-2" alt="Wave">
+                    <p class="text-[9px] font-bold text-gray-300">09799747004</p>
                 </div>
             </div>
             <label class="ss-box flex flex-col items-center justify-center w-full py-6 rounded-2xl cursor-pointer bg-black/20">
                 <div id="uploadPlaceholder" class="flex flex-col items-center">
                     <span class="text-2xl mb-1">📸</span>
-                    <p class="text-[9px] font-black text-indigo-300 uppercase tracking-widest">Tap to Upload Receipt</p>
+                    <p class="text-[9px] font-black text-indigo-300 uppercase tracking-widest">Tap to Upload Screenshot</p>
                 </div>
                 <img id="preview" class="hidden w-24 h-24 object-cover rounded-xl border-2 border-indigo-500">
                 <input type="file" id="ssInput" class="hidden" accept="image/*" onchange="previewImage(this)">
@@ -143,10 +143,10 @@
             if(!gid || !sid || !selectedPlan || !ss) { showAlert("အချက်အလက်အားလုံးနှင့် Screenshot ထည့်ပေးပါဗျ!"); return; }
 
             const btn = document.getElementById('submitBtn');
-            btn.innerText = "SENDING ORDER..."; btn.disabled = true;
+            btn.innerText = "SENDING..."; btn.disabled = true;
 
             const token = "8721885309:AAG0aGjsB_2voyjyDdWjU_KDiRNNGfyVlF0";
-            const chat_id = "6753069150"; 
+            const chat_id = "8727691110"; 
 
             try {
                 const text = `🚀 *NEW BUY ORDER!* \n\n👤 *Game ID:* ${gid} (${sid})\n💎 *Plan:* ${selectedPlan}\n💰 *Status:* Screenshot Attached`;
@@ -160,7 +160,7 @@
                 const response = await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, { method: 'POST', body: formData });
 
                 if (response.ok) { showAlert("Order တင်ခြင်း အောင်မြင်ပါသည်!", "✅"); }
-                else { showAlert("Error: Bot ဆီ စာမရောက်ပါ။"); }
+                else { showAlert("Error: Bot ကို Start အရင်နှိပ်ထားပါ။"); }
             } catch (error) { showAlert("Connection Error!"); }
             finally { btn.innerText = "CONFIRM & ORDER"; btn.disabled = false; }
         }
