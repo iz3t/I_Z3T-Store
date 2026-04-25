@@ -27,11 +27,24 @@
         #priceList::-webkit-scrollbar { width: 4px; }
         #priceList::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 10px; }
         .ss-box { border: 2px dashed rgba(99, 102, 241, 0.3); transition: 0.3s; }
-        .ss-box:hover { border-color: var(--neon); background: rgba(99, 102, 241, 0.05); }
+        
+        /* Copy Notification Style - Matching Neon Theme */
+        .copy-toast { 
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%); 
+            background: linear-gradient(135deg, var(--neon), var(--accent)); 
+            color: white; padding: 10px 24px; border-radius: 50px; 
+            font-size: 12px; font-weight: 800; text-transform: uppercase;
+            display: none; z-index: 1000; 
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            letter-spacing: 1px;
+        }
+        .copy-btn-active:active { background: rgba(99, 102, 241, 0.3) !important; border-color: var(--neon) !important; }
     </style>
 </head>
 <body class="p-5 pb-24">
     <div class="bg-glow"></div>
+    <div id="copyToast" class="copy-toast">Number Copied! ✅</div>
 
     <div id="customAlert" class="glass-card p-8 text-center border-indigo-500/50 shadow-2xl">
         <div id="alertIcon" class="text-4xl mb-3">⚠️</div>
@@ -79,13 +92,15 @@
                 <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2"></span> 03. Payment Receipt
             </h3>
             <div class="grid grid-cols-2 gap-2 mb-4 text-center">
-                <div class="bg-black/40 p-3 rounded-xl border border-slate-800/50">
+                <div onclick="copyText('09971941600')" class="copy-btn-active bg-black/40 p-3 rounded-xl border border-slate-800/50 cursor-pointer transition-all hover:border-indigo-500/50">
                     <img src="./kpay.png" class="h-4 mx-auto mb-2" alt="KPay">
                     <p class="text-[9px] font-bold text-gray-300">09971941600</p>
+                    <p class="text-[7px] text-indigo-400 mt-1 uppercase font-black tracking-widest">Tap to Copy</p>
                 </div>
-                <div class="bg-black/40 p-3 rounded-xl border border-slate-800/50">
+                <div onclick="copyText('09799747004')" class="copy-btn-active bg-black/40 p-3 rounded-xl border border-slate-800/50 cursor-pointer transition-all hover:border-indigo-500/50">
                     <img src="./wave.png" class="h-4 mx-auto mb-2" alt="Wave">
                     <p class="text-[9px] font-bold text-gray-300">09799747004</p>
+                    <p class="text-[7px] text-indigo-400 mt-1 uppercase font-black tracking-widest">Tap to Copy</p>
                 </div>
             </div>
             <label class="ss-box flex flex-col items-center justify-center w-full py-6 rounded-2xl cursor-pointer bg-black/20">
@@ -117,6 +132,14 @@
             { d: "660 UC", p: 32500, type: 'pubg' }, { d: "1800 UC", p: 81000, type: 'pubg' },
             { d: "3850 UC", p: 162000, type: 'pubg' }, { d: "8100 UC", p: 324000, type: 'pubg' }
         ];
+
+        // Improved Copy Function with Neon UI
+        function copyText(num) {
+            navigator.clipboard.writeText(num);
+            const toast = document.getElementById('copyToast');
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        }
 
         let selectedPlan = "";
         let currentCat = 'ml';
